@@ -1,33 +1,38 @@
 package com.example.lab_week_04
 
-import android.content.ContentProvider
-import android.content.Context
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import kotlinx.coroutines.withContext
 
-val TABS_FIXED = listOf(
-    R.string.starbucks_title,
-    R.string.janjijiwa_title,
-    R.string.kopikenangan_title,
-)
+class CafeAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+    FragmentStateAdapter(fragmentManager, lifecycle) {
 
-val TABS_CONTENT_FIXED = listOf(
-    R.string.starbucks_desc,
-    R.string.janjijiwa_desc,
-    R.string.kopikenangan_desc,
-)
+    // Array of cafe titles (to match each tab)
+    private val cafes = listOf(
+        R.string.starbucks_title,
+        R.string.janjijiwa_title,
+        R.string.kopikenangan_title
+    )
 
-class CafeAdapter(private val context: Context, fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
-
+    // Total number of tabs
     override fun getItemCount(): Int {
-        return TABS_FIXED.size
+        return cafes.size
     }
-    override fun createFragment(position: Int): Fragment
-    {
-        return CafeDetailFragment.newInstance(context.getString(TABS_CONTENT_FIXED[position]))
+
+    // Provide the appropriate fragment for each tab
+    override fun createFragment(position: Int): Fragment {
+        val titleResId = cafes[position]
+        val descriptionResId = when (position) {
+            0 -> R.string.starbucks_desc
+            1 -> R.string.janjijiwa_desc
+            2 -> R.string.kopikenangan_desc
+            else -> R.string.starbucks_desc
+        }
+
+        return CafeDetailFragment.newInstance(
+            titleResId,
+            descriptionResId
+        )
     }
 }
