@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.Navigation
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,37 +19,34 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ListFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val coffeeList = listOf<View>(
-            view.findViewById(R.id.affogato),
-            view.findViewById(R.id.americano),
-            view.findViewById(R.id.latte)
+
+        // Find coffee list views
+        val coffeeList = listOf(
+            view.findViewById<TextView>(R.id.affogato),
+            view.findViewById<TextView>(R.id.americano),
+            view.findViewById<TextView>(R.id.latte)
         )
 
-        coffeeList.forEach{ coffee ->
-            val fragmentBundle = Bundle()
-            fragmentBundle.putInt(COFFEE_ID, coffee.id)
-            coffee.setOnClickListener(
-                Navigation.createNavigateOnClickListener(
-                    R.id.action_listFragment_to_detailFragment, fragmentBundle)
-            )
-        }
-    }
+        coffeeList.forEach { coffee ->
+            coffee.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putInt(DetailFragment.COFFEE_ID, coffee.id)
+                }
 
-    companion object {
-        const val COFFEE_ID = "COFFEE_ID"
+                // Navigate to DetailFragment
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_listFragment_to_detailFragment, bundle)
+            }
+        }
     }
 }
