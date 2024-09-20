@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -38,13 +36,13 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "Coffee Favorites: $coffeeFavorites")
 
         // Uncomment if needed
-        // val viewPager = findViewById<ViewPager2>(R.id.view_pager)
-        // val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
-        // val adapter = CafeAdapter(supportFragmentManager, lifecycle)
-        // viewPager.adapter = adapter
-        // TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-        //     tab.text = resources.getString(TABS_FIXED[position])
-        // }.attach()
+//         val viewPager = findViewById<ViewPager2>(R.id.view_pager)
+//         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+//         val adapter = CafeAdapter(supportFragmentManager, lifecycle)
+//         viewPager.adapter = adapter
+//         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+//             tab.text = resources.getString(TABS_FIXED[position])
+//         }.attach()
     }
 
     override fun onSupportNavigateUp(): Boolean {

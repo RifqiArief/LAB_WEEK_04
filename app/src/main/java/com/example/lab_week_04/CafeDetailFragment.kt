@@ -7,20 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
-private const val ARG_TITLE = "title"
-private const val ARG_DESCRIPTION = "description"
-
 class CafeDetailFragment : Fragment() {
 
-    // Variables to store the title and description
-    private var titleResId: Int? = null
-    private var descriptionResId: Int? = null
+    private var content: String? = null
+    private var title: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Retrieve the arguments passed in newInstance
         arguments?.let {
-            titleResId = it.getInt(ARG_TITLE)
-            descriptionResId = it.getInt(ARG_DESCRIPTION)
+            content = it.getString(TAB_CONTENT)
+            title = it.getString(TAB_TITLE)
         }
     }
 
@@ -28,27 +25,29 @@ class CafeDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cafe_detail2, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set the title and description in the views
-        view.findViewById<TextView>(R.id.cafe_title).text = getString(titleResId ?: R.string.starbucks_title)
-        view.findViewById<TextView>(R.id.cafe_desc).text = getString(descriptionResId ?: R.string.starbucks_desc)
+        // Set the text for the TextViews dynamically
+        view.findViewById<TextView>(R.id.cafe_title)?.text = title
+        view.findViewById<TextView>(R.id.content_description)?.text = content
     }
 
     companion object {
-        // Factory method to create a new instance of this fragment
-        @JvmStatic
-        fun newInstance(titleResId: Int, descriptionResId: Int) =
+        private const val TAB_TITLE = "TAB_TITLE"
+        private const val TAB_CONTENT = "TAB_CONTENT"
+
+        // Use this method to create a new instance of the fragment with title and content
+        fun newInstance(title: String, content: String) =
             CafeDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_TITLE, titleResId)
-                    putInt(ARG_DESCRIPTION, descriptionResId)
+                    putString(TAB_TITLE, title)
+                    putString(TAB_CONTENT, content)
                 }
             }
     }
 }
-
